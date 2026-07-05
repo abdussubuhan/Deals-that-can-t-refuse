@@ -5,201 +5,218 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deals that can't refuse</title>
     <style>
-        /* BUG FIX: Prevent horizontal scroll from large fonts/marquee */
-        html, body {
-            overflow-x: hidden;
-            width: 100%;
-            background-color: #f0f0f0;
-            color: #000;
+        /* CORE BRUTALIST THEME */
+        :root {
+            --bg: #e0e0e0;
+            --yellow: #ffde03;
+            --pink: #ff0055;
+            --black: #000000;
+            --white: #ffffff;
+            --border: 5px solid #000;
+        }
+
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Courier New', Courier, monospace;
         }
 
-        *, *:before, *:after {
-            box-sizing: inherit;
-        }
-
         body {
-            padding: 20px;
+            background-color: var(--bg);
+            color: var(--black);
+            line-height: 1.3;
+            padding: 15px;
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
 
-        /* MARQUEE BUG FIX: Ensure it stays full width */
-        .marquee-container {
-            background: #000;
-            color: #fff;
+        /* MARQUEE */
+        .scroller {
+            background: var(--black);
+            color: var(--white);
             padding: 10px 0;
             font-weight: bold;
-            text-transform: uppercase;
+            font-size: 1.2rem;
             margin-bottom: 20px;
-            width: 100vw;
-            margin-left: -20px; /* Offset body padding */
+            border: var(--border);
         }
 
+        /* HEADER */
         header {
-            border: 8px solid #000;
-            background: #ffde03;
-            padding: 40px 20px;
-            margin-bottom: 40px;
-            box-shadow: 15px 15px 0px #000;
+            background: var(--yellow);
+            border: 8px solid var(--black);
+            padding: 30px 15px;
+            margin-bottom: 30px;
+            box-shadow: 12px 12px 0px var(--black);
         }
 
         h1 {
-            font-size: clamp(2.5rem, 8vw, 6rem); /* BUG FIX: Better scaling on mobile */
+            font-size: clamp(2rem, 10vw, 5rem);
             text-transform: uppercase;
-            line-height: 0.9;
-            margin: 0;
+            line-height: 0.85;
+            word-wrap: break-word;
         }
 
         .tagline {
-            font-weight: bold;
-            font-size: 1.2rem;
-            background: #000;
-            color: #fff;
             display: inline-block;
-            padding: 5px 15px;
+            background: var(--black);
+            color: var(--white);
+            padding: 5px 10px;
             margin-top: 15px;
+            font-weight: bold;
+        }
+
+        /* GRID */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .deal-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            max-width: 1400px;
-            margin: 0 auto;
+            gap: 25px;
         }
 
+        /* PRODUCT CARD */
         .product-card {
-            background: #fff;
-            border: 5px solid #000;
+            background: var(--white);
+            border: var(--border);
             padding: 20px;
+            box-shadow: 8px 8px 0px var(--black);
             display: flex;
             flex-direction: column;
-            box-shadow: 10px 10px 0px #000;
-            transition: transform 0.05s linear;
+            transition: all 0.1s ease;
         }
 
         .product-card:hover {
             transform: translate(-4px, -4px);
-            box-shadow: 14px 14px 0px #ff0055;
+            box-shadow: 12px 12px 0px var(--pink);
         }
 
         .product-image {
             width: 100%;
-            aspect-ratio: 1 / 1; /* BUG FIX: Keeps all cards same size regardless of image */
-            background: #eee;
-            border: 3px solid #000;
+            aspect-ratio: 1 / 1;
             object-fit: cover;
+            border: 3px solid var(--black);
             margin-bottom: 15px;
+            background: #ccc;
         }
 
         .product-title {
             font-size: 1.4rem;
             font-weight: 900;
             text-transform: uppercase;
-            margin: 0 0 10px 0;
-            min-height: 3.2em; /* Keeps buttons aligned */
+            margin-bottom: 10px;
+            min-height: 3em; /* Vertical alignment */
         }
 
         .price {
             font-size: 2rem;
-            font-weight: bold;
-            color: #ff0055;
-            margin-top: auto; /* Pushes price/button to bottom */
+            font-weight: 900;
+            color: var(--pink);
             margin-bottom: 15px;
         }
 
         .buy-btn {
-            display: block;
-            text-align: center;
-            background: #000;
-            color: #fff;
-            padding: 15px;
+            background: var(--black);
+            color: var(--white);
             text-decoration: none;
-            font-weight: 900;
-            border: 3px solid #000;
+            text-align: center;
+            padding: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 3px solid var(--black);
+            margin-top: auto; /* Push to bottom */
         }
 
         .buy-btn:hover {
-            background: #fff;
-            color: #000;
+            background: var(--white);
+            color: var(--black);
         }
 
+        /* FOOTER */
         footer {
-            margin-top: 60px;
-            border-top: 10px solid #000;
-            padding: 40px 0;
+            margin-top: 50px;
+            padding: 30px 0;
+            border-top: 10px solid var(--black);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            header { border-width: 5px; box-shadow: 6px 6px 0px var(--black); }
+            .product-card { box-shadow: 5px 5px 0px var(--black); }
         }
     </style>
 </head>
 <body>
 
-    <div class="marquee-container">
-        <marquee scrollamount="12">URGENT DEALS // NO REFUNDS // TAKE THE OFFER OR LEAVE IT // AS SEEN ON THE STREETS</marquee>
+    <div class="scroller">
+        <marquee scrollamount="10">URGENT DEALS // TAKE THE OFFER // LIMITED STOCK // NO COMPLAINTS // BUY NOW OR REGRET LATER</marquee>
     </div>
 
-    <header>
-        <h1>DEALS THAT CAN'T REFUSE</h1>
-        <div class="tagline">The Consigliere's Top Picks</div>
-    </header>
+    <div class="container">
+        <header>
+            <h1>DEALS THAT CAN'T REFUSE</h1>
+            <div class="tagline">The Consigliere's Top Picks</div>
+        </header>
 
-    <main id="deal-grid" class="deal-grid">
-        <!-- JS handles rendering to prevent HTML duplication bugs -->
-    </main>
+        <main id="deal-grid" class="deal-grid">
+            <!-- PRODUCTS LOADED BY JAVASCRIPT BELOW -->
+        </main>
 
-    <footer>
-        <p><strong>DISCLAIMER:</strong> AS AN AMAZON ASSOCIATE I EARN FROM QUALIFYING PURCHASES. YOU PAY THE SAME, I GET A CUT. THAT'S THE DEAL.</p>
-    </footer>
+        <footer>
+            <p><strong>Disclaimer:</strong> As an Amazon Associate, I earn from qualifying purchases. This keeps the lights on. No apologies. &copy; 2026 DEALS THAT CAN'T REFUSE.</p>
+        </footer>
+    </div>
 
     <script>
-        // UPDATE YOUR PRODUCTS HERE
-        const products = [
+        // DATA MANAGEMENT: ADD OR CHANGE PRODUCTS HERE
+        const DEALS = [
             {
-                title: "Ultra-Noise Headphones",
-                desc: "Block out the world.",
-                price: "$199.99",
-                image: "https://via.placeholder.com/400x400?text=HEADPHONES",
-                url: "YOUR_LINK_1"
+                title: "Noise Cancelling Gear",
+                price: "$199",
+                image: "https://via.placeholder.com/400x400?text=AUDIO",
+                url: "#" // PASTE AMAZON LINK HERE
             },
             {
-                title: "Mechanical Keyboard",
-                desc: "Loud enough to be a weapon.",
-                price: "$85.00",
-                image: "https://via.placeholder.com/400x400?text=KEYBOARD",
-                url: "YOUR_LINK_2"
+                title: "Mechanical Click-Clack",
+                price: "$85",
+                image: "https://via.placeholder.com/400x400?text=KEYS",
+                url: "#" // PASTE AMAZON LINK HERE
             },
             {
-                title: "Smart Watch Pro",
-                desc: "Time is money. Don't waste it.",
-                price: "$249.00",
+                title: "The Don's Watch",
+                price: "$249",
                 image: "https://via.placeholder.com/400x400?text=WATCH",
-                url: "YOUR_LINK_3"
+                url: "#" // PASTE AMAZON LINK HERE
             },
             {
-                title: "Black Coffee Maker",
-                desc: "Stronger than your willpower.",
-                price: "$45.50",
+                title: "Midnight Espresso",
+                price: "$45",
                 image: "https://via.placeholder.com/400x400?text=COFFEE",
-                url: "YOUR_LINK_4"
+                url: "#" // PASTE AMAZON LINK HERE
             }
         ];
 
         const grid = document.getElementById('deal-grid');
 
-        // BUG FIX: Added security rel="noopener" and handled empty data
-        grid.innerHTML = products.map(p => `
-            <article class="product-card">
-                <img src="${p.image}" alt="${p.title}" class="product-image" loading="lazy">
-                <h2 class="product-title">${p.title}</h2>
-                <p>${p.desc}</p>
-                <div class="price">${p.price}</div>
-                <a href="${p.url}" 
-                   target="_blank" 
-                   rel="noopener noreferrer" 
-                   class="buy-btn">GET IT NOW</a>
-            </article>
-        `).join('');
+        // FUNCTION TO RENDER CARDS
+        function loadDeals() {
+            grid.innerHTML = DEALS.map(item => `
+                <article class="product-card">
+                    <img src="${item.image}" alt="${item.title}" class="product-image">
+                    <h2 class="product-title">${item.title}</h2>
+                    <div class="price">${item.price}</div>
+                    <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="buy-btn">GET IT NOW</a>
+                </article>
+            `).join('');
+        }
+
+        // INITIALIZE
+        loadDeals();
     </script>
 </body>
 </html>
